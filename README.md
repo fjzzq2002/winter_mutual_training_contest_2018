@@ -1,0 +1,2 @@
+# winter_mutual_training_contest_2018
+2018年集训队冬令营前胡策个人吐槽仓库
