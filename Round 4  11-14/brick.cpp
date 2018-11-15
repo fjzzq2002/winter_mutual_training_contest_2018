@@ -39,9 +39,14 @@ pll operator - (pll a,pll b)
 {return pll(a.fi-b.fi,a.se-b.se);}
 ll operator * (pll a,pll b)
 {return a.fi*(ll)b.se-a.se*(ll)b.fi;}
+bool mycmp(pll a,pll b)
+{
+	if(a.fi!=b.fi) return a.fi<b.fi;
+	return a.se>b.se;
+}
 vector<pll> graham(vector<pll> v)
 {
-	sort(v.begin(),v.end());
+	sort(v.begin(),v.end(),mycmp);
 	reverse(v.begin(),v.end());
 	static pll st[SZ]; int sn=0;
 	for(auto x:v)
@@ -58,7 +63,7 @@ ll c0[SZ],c1[SZ],r0[SZ],r1[SZ];
 bool bad[SZ];
 void go(int l,int r,ll*A,ll*B,ll*C,ll*D)
 {
-	if(l==r) return;
+	if(l>=r) return;
 	int m=(l+r)>>1;
 	go(l,m,A,B,C,D);
 	go(m+1,r,A,B,C,D);
@@ -88,8 +93,8 @@ int main()
 	for(int i=1;i<=n;++i)
 	{
 		scanf("%lld%lld",l+i,r+i);
-		s0[i]=s0[i-1]+(r[i]-l[i]+1);
-		s1[i]=s1[i-1]+(l[i]+r[i])*ll(r[i]-l[i]+1)/2;
+		s0[i]=s0[i-1]+(r[i]-l[i])*2;
+		s1[i]=s1[i-1]+(l[i]+r[i])*ll(r[i]-l[i]);
 		r0[i]=-s0[i]; r1[i]=-s1[i];
 	}
 	for(int i=1;i<=n;++i)
@@ -106,4 +111,3 @@ int main()
 		ans=max(ans,i-ls),ls=i;
 	printf("%d\n",ans);
 }
-
